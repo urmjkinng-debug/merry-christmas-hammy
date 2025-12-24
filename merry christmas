@@ -1,0 +1,162 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Merry Christmas Hammy 🎄</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(#0b1d3a, #123);
+      color: #fff;
+      overflow-x: hidden;
+      text-align: center;
+    }h1 {
+  margin-top: 30px;
+  font-size: 2.5rem;
+}
+
+p {
+  max-width: 600px;
+  margin: 10px auto 30px;
+  opacity: 0.9;
+}
+
+.tree {
+  position: relative;
+  width: 260px;
+  margin: 40px auto;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-left: 130px solid transparent;
+  border-right: 130px solid transparent;
+  border-bottom: 160px solid #0f7a3e;
+  margin: -20px auto;
+}
+
+.trunk {
+  width: 50px;
+  height: 60px;
+  background: #5c3a1e;
+  margin: 0 auto;
+}
+
+.ornament {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  position: absolute;
+  cursor: pointer;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 5px rgba(255,255,255,0.4); }
+  to { box-shadow: 0 0 12px rgba(255,255,255,0.9); }
+}
+
+.score {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+button {
+  background: #e63946;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 15px;
+}
+
+button:hover { opacity: 0.85; }
+
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: #fff;
+  user-select: none;
+  pointer-events: none;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh); }
+}
+
+footer {
+  margin: 40px 0 20px;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+  </style>
+</head>
+<body>  <h1>🎄 Merry Christmas, Hammy! 🎄</h1>
+  <p>Click the glowing ornaments on the tree to collect Christmas joy ✨
+     Turn on the music and enjoy the snow.</p><button onclick="startMusic()">🎶 Start Christmas Music</button> <button onclick="toggleMusic()">⏸️ Pause / Resume</button>
+
+  <div class="tree" id="tree">
+    <div class="triangle"></div>
+    <div class="triangle"></div>
+    <div class="triangle"></div>
+    <div class="trunk"></div>
+  </div>  <div class="score">🎁 Gifts Collected: <span id="score">0</span></div>  <footer>
+    Made with ❤️ just for you
+  </footer>  <!-- Christmas Music -->  <audio id="music" loop>
+    <source src="https://cdn.pixabay.com/audio/2022/10/30/audio_5b0c62c1e5.mp3" type="audio/mpeg">
+  </audio>  <script>
+    const tree = document.getElementById('tree');
+    const scoreEl = document.getElementById('score');
+    const music = document.getElementById('music');
+    let score = 0;
+
+    function createOrnament() {
+      const o = document.createElement('div');
+      o.className = 'ornament';
+      o.style.background = `hsl(${Math.random()*360}, 80%, 60%)`;
+      o.style.left = Math.random()*200 + 30 + 'px';
+      o.style.top = Math.random()*180 + 20 + 'px';
+
+      o.onclick = () => {
+        score++;
+        scoreEl.textContent = score;
+        o.remove();
+        createOrnament();
+      };
+      tree.appendChild(o);
+    }
+
+    for (let i = 0; i < 6; i++) createOrnament();
+
+    function startMusic() {
+      music.volume = 0.6;
+      music.play();
+    }
+
+    function toggleMusic() {
+      if (music.paused) music.play();
+      else music.pause();
+    }
+
+    // Snow effect
+    function createSnow() {
+      const snow = document.createElement('div');
+      snow.className = 'snowflake';
+      snow.textContent = '❄';
+      snow.style.left = Math.random() * window.innerWidth + 'px';
+      snow.style.fontSize = Math.random() * 10 + 10 + 'px';
+      snow.style.animationDuration = Math.random() * 3 + 3 + 's';
+      document.body.appendChild(snow);
+      setTimeout(() => snow.remove(), 6000);
+    }
+
+    setInterval(createSnow, 300);
+  </script></body>
+</html>
